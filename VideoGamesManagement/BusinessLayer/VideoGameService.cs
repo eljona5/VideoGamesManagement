@@ -13,6 +13,7 @@ namespace VideoGamesManagement.BusinessLayer
             var games = gamesRepository.GetAllVideoGames();
             return games;
         }
+
         public VideoGame VideoGameById(int id)
         {
             var gamesRepository = new VideoGameRepository();
@@ -23,25 +24,23 @@ namespace VideoGamesManagement.BusinessLayer
                                          .FirstOrDefault();
             return videogameid;
         }
+
         public void AddVideoGame(VideoGame videoGame)
         {
             var gamesRepository = new VideoGameRepository();
-             gamesRepository.AddVideoGames(videoGame);
-            
+             gamesRepository.AddVideoGames(videoGame);  
         }
 
         public void DeleteVideoGames(VideoGame videoGame)
         {
             var gamesRepository = new VideoGameRepository();
             gamesRepository.DeleteVideoGames(videoGame);
-
         }
 
         public void UpdateVideoGame(VideoGame videoGame)
         {
             var gamesRepository = new VideoGameRepository();
             gamesRepository.UpdateVideoGame(videoGame);
-
         }
 
         public List<VideoGame> FilterVideoGame([FromQuery] string? name, [FromQuery] int? size, [FromQuery] string? studio)

@@ -35,6 +35,7 @@ namespace VideoGamesManagement.DataLayer.Repositories
                 throw ex;
             }
         }
+
         //Update
         //Remove
         public void DeleteVideoGames(VideoGame game)
@@ -51,6 +52,7 @@ namespace VideoGamesManagement.DataLayer.Repositories
                 throw ex;
             }
         }
+
         public void UpdateVideoGame(VideoGame game)
         {
             try
@@ -64,7 +66,6 @@ namespace VideoGamesManagement.DataLayer.Repositories
                 throw ex;
             }
         }
-
 
     }
 }

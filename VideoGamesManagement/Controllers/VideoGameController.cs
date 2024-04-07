@@ -10,7 +10,6 @@ namespace VideoGamesManagement.Controllers
     [ApiController]
     public class VideoGamesController : ControllerBase
     {
-
         [HttpGet("getallvideogames")]
         public List<VideoGame> GetVideoGames()
         {
@@ -20,7 +19,6 @@ namespace VideoGamesManagement.Controllers
 
             return games;
         }
-
 
         [HttpGet("getbyid")]
         public VideoGame GetById([FromQuery] int id)
