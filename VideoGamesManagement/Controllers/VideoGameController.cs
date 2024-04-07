@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VideoGamesManagement.BusinessLayer;
 using VideoGamesManagement.DataLayer.Entities;
+using VideoGamesManagement.DataLayer.Repositories;
 
 namespace VideoGamesManagement.Controllers
 {
@@ -77,6 +78,16 @@ namespace VideoGamesManagement.Controllers
                 return StatusCode(500, $"An error occurred while updating the video game: {ex.Message}");
             }
         }
+
+        [HttpGet("filtervideogames")]
+        public List<VideoGame> FilterVideoGame([FromQuery] string? name, [FromQuery] int? size, [FromQuery] string? studio)
+        {
+            var videogameService = new VideoGameService();
+            var videogame = videogameService.FilterVideoGame(name,size,studio);
+            
+            return videogame;
+        }
+
     }
 }
     

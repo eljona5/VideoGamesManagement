@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using VideoGamesManagement.DataLayer.Entities;
 using VideoGamesManagement.DataLayer.Repositories;
 
@@ -42,6 +43,27 @@ namespace VideoGamesManagement.BusinessLayer
             gamesRepository.UpdateVideoGame(videoGame);
 
         }
+
+        public List<VideoGame> FilterVideoGame([FromQuery] string? name, [FromQuery] int? size, [FromQuery] string? studio)
+        {
+            var gamesRepository = new VideoGameRepository();
+           var videogame = gamesRepository.GetAllVideoGames();
+            if (!string.IsNullOrEmpty(name))
+            {
+                videogame = videogame.Where(p => p.Name.Contains(name))
+                   .ToList();
+            }
+            if (size != 0 && size != null)
+            {
+                videogame = videogame.Where(p => p.Size == size).ToList();
+            }
+            if (!string.IsNullOrEmpty(studio))
+            {
+                videogame = videogame.Where(p => p.Studio.Contains(studio))
+                   .ToList();
+            }
+            return videogame;
+        }                      
     }
 
 }
