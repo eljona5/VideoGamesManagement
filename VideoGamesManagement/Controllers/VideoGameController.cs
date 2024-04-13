@@ -10,12 +10,18 @@ namespace VideoGamesManagement.Controllers
     [ApiController]
     public class VideoGamesController : ControllerBase
     {
+        private readonly IVideoGameService _videoGameService;
+        public VideoGamesController (IVideoGameService  videoGameService)
+        {
+            _videoGameService = videoGameService;
+        }
+
         [HttpGet("getallvideogames")]
         public List<VideoGame> GetVideoGames()
         {
-            var videogameService = new VideoGameService();
+            // var videogameService = new VideoGameService();
             var games = new List<VideoGame>();
-            games = videogameService.GetAllVideoGame();
+            games = _videoGameService.GetAllVideoGame();
 
             return games;
         }
@@ -23,30 +29,29 @@ namespace VideoGamesManagement.Controllers
         [HttpGet("getbyid")]
         public VideoGame GetById([FromQuery] int id)
         {
-            var videogameService = new VideoGameService();
-            var gameid = videogameService.VideoGameById(id);
+            // var videogameService = new VideoGameService();
+            var gameid = _videoGameService.VideoGameById(id);
             return gameid;
         }
-
 
         [HttpPost("addnewvideogame")]
         public IActionResult AddVideoGame([FromBody] VideoGame videogame)
         {
-            var videogameService = new VideoGameService();
-            videogameService.AddVideoGame(videogame);
+            // var videogameService = new VideoGameService();
+            _videoGameService.AddVideoGame(videogame);
             return new OkObjectResult("Video Game was added succesfully");
         }
 
         [HttpDelete("deletevideogame")]
         public IActionResult DeleteVideoGames([FromQuery] int id)
         {
-            var videogameService = new VideoGameService();
-            var videogameExists = videogameService.VideoGameById(id);
+            // var videogameService = new VideoGameService();
+            var videogameExists = _videoGameService.VideoGameById(id);
             if (videogameExists == null)
             {
                 throw new Exception("Record does not existst");
             }
-            videogameService.DeleteVideoGames(videogameExists);
+            _videoGameService.DeleteVideoGames(videogameExists);
             return new OkObjectResult("Video game was deleted succesfully");
         }
 
@@ -55,8 +60,8 @@ namespace VideoGamesManagement.Controllers
         {
             try
             {
-                var videogameService = new VideoGameService();
-                var existingVideoGame = videogameService.VideoGameById(updatedVideoGame.ID);
+                // var videogameService = new VideoGameService();
+                var existingVideoGame = _videoGameService.VideoGameById(updatedVideoGame.ID);
 
                 if (existingVideoGame == null)
                 {
@@ -66,7 +71,7 @@ namespace VideoGamesManagement.Controllers
                 existingVideoGame.Name = updatedVideoGame.Name;
                 existingVideoGame.Size = updatedVideoGame.Size;
                 existingVideoGame.Studio = updatedVideoGame.Studio;
-                videogameService.UpdateVideoGame(existingVideoGame);
+                _videoGameService.UpdateVideoGame(existingVideoGame);
 
                 return new OkObjectResult("Video game updated successfully");
             }
@@ -80,8 +85,8 @@ namespace VideoGamesManagement.Controllers
         [HttpGet("filtervideogames")]
         public List<VideoGame> FilterVideoGame([FromQuery] string? name, [FromQuery] int? size, [FromQuery] string? studio)
         {
-            var videogameService = new VideoGameService();
-            var videogame = videogameService.FilterVideoGame(name,size,studio);
+            // var videogameService = new VideoGameService();
+            var videogame = _videoGameService.FilterVideoGame(name,size,studio);
             
             return videogame;
         }

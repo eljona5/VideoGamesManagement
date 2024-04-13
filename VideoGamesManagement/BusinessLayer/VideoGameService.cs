@@ -5,21 +5,26 @@ using VideoGamesManagement.DataLayer.Repositories;
 
 namespace VideoGamesManagement.BusinessLayer
 {
-    public class VideoGameService
+    public class VideoGameService : IVideoGameService
     {
+        private readonly IVideoGameRepository _videoGameRepository;
+        public VideoGameService( IVideoGameRepository videoGameRepository)
+        { 
+            _videoGameRepository = videoGameRepository;
+        }
         public List<VideoGame> GetAllVideoGame()
         {
-            var gamesRepository = new VideoGameRepository();
-            var games = gamesRepository.GetAllVideoGames();
+            
+            var games = _videoGameRepository.GetAllVideoGames();
             return games;
         }
 
         public VideoGame VideoGameById(int id)
         {
-            var gamesRepository = new VideoGameRepository();
-            var videogame = gamesRepository.GetAllVideoGames();
+           
+            var videogame = _videoGameRepository.GetAllVideoGames();
 
-            var videogameid = gamesRepository.GetAllVideoGames()
+            var videogameid = _videoGameRepository.GetAllVideoGames()
                                         .Where(p => p.ID == id)
                                          .FirstOrDefault();
             return videogameid;
@@ -27,26 +32,25 @@ namespace VideoGamesManagement.BusinessLayer
 
         public void AddVideoGame(VideoGame videoGame)
         {
-            var gamesRepository = new VideoGameRepository();
-             gamesRepository.AddVideoGames(videoGame);  
+            _videoGameRepository.AddVideoGames(videoGame);  
         }
 
         public void DeleteVideoGames(VideoGame videoGame)
         {
-            var gamesRepository = new VideoGameRepository();
-            gamesRepository.DeleteVideoGames(videoGame);
+            
+            _videoGameRepository.DeleteVideoGames(videoGame);
         }
 
         public void UpdateVideoGame(VideoGame videoGame)
         {
-            var gamesRepository = new VideoGameRepository();
-            gamesRepository.UpdateVideoGame(videoGame);
+
+            _videoGameRepository.UpdateVideoGame(videoGame);
         }
 
         public List<VideoGame> FilterVideoGame([FromQuery] string? name, [FromQuery] int? size, [FromQuery] string? studio)
         {
-            var gamesRepository = new VideoGameRepository();
-           var videogame = gamesRepository.GetAllVideoGames();
+           
+           var videogame = _videoGameRepository.GetAllVideoGames();
             if (!string.IsNullOrEmpty(name))
             {
                 videogame = videogame.Where(p => p.Name.Contains(name))

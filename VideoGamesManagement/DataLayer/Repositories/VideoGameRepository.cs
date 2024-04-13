@@ -2,7 +2,7 @@
 using static VideoGamesManagement.DataLayer.DBContext.VideoGamesContext;
 namespace VideoGamesManagement.DataLayer.Repositories
 {
-    public class VideoGameRepository
+    public class VideoGameRepository : IVideoGameRepository
     {
         private readonly VideoGamesManagementDBContext _gamesManagementDBContext;
         public VideoGameRepository()
